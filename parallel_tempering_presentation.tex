@@ -1,81 +1,60 @@
 \documentclass[xetex]{beamer}
 %\documentclass[draft, xetex]{beamer}
 
+
+		% Iclude packages and commands used text-wide.	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{mystyle}
 \usepackage{my_commands}
 
-\mode<presentation>{
-	%\usetheme{Berlin}
-	\usetheme{CambridgeUS}
-	\setbeamercovered{transparent}
-}
 
-\setmainfont[Ligatures=TeX]{Linux Libertine O}
+		% Presentation settings.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-	% Title
-\title[Parrellel Tempering]{Parrellel Tempering }
-\subtitle{theory and applications}
-
-%\beamerdefaultoverlayspecification{<+->}
-\date{24 April 2013}
-\author[Łącki]{Mateusz Łącki}
-\institute[UW]{Uniwersytet Warszawski}
-\titlegraphic{\includegraphics[scale=.4, keepaspectratio]{./picts/eagle.jpg}}
-
-\usefonttheme[onlylarge]{structuresmallcapsserif}
-%\usefonttheme[onlysmall]{structurebold}
+	\mode<presentation>{
+		%\usetheme{Berlin}
+		\usetheme{CambridgeUS}
+		\setbeamercovered{transparent}
+	}
 
 
-	
+
+
+		% Title
+	\title[Parrellel Tempering]{Parrellel Tempering }
+	\subtitle{theory and applications}
+
+	%\beamerdefaultoverlayspecification{<+->}
+	\date{24 April 2013}
+	\author[Łącki]{Mateusz Łącki}
+	\institute[UW]{Uniwersytet Warszawski}
+	\titlegraphic{\includegraphics[scale=.4, keepaspectratio]{./picts/eagle.jpg}}
+
+	\usefonttheme[onlylarge]{structuresmallcapsserif}
+	%\usefonttheme[onlysmall]{structurebold}
+
+
+		% The document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 
 \begin{document}
 \fontspec[Numbers={OldStyle}]{Linux Libertine O}
 
 
-\begin{frame}
-\titlepage
-\end{frame}
+	\begin{frame}
+		\titlepage
+	\end{frame}
 
-\begin{frame}
-	\frametitle{Plan prezentacji}
-	\tableofcontents[pausesections]
-\end{frame}
+	\begin{frame}
+		\frametitle{Today's Agenda}
+		%\tableofcontents[pausesections]
+		\tableofcontents
+	\end{frame}
 
 
-
-\section[Bayes]{Przypomnienie filozofii rozumowania Bayes'owskiego}
-
-\subsection{Teoria}
-
-\begin{frame}
-	\frametitle{Model Statystyczny}
+	\include{./tex/test.tex}
 	
-\begin{itemize}
-	\item $X $ charakterystyki pewnego zjawiska.
-	\item $$X: \underbrace{(\Omega, \mathcal{F})}_{\text{stany natury}}\rightarrow \underbrace{(\mathcal{X}, \mathcal{B})}_{\text{realizacje zjawiska}} $$
-	\item Mierzalność: $ X^{(-1)} [ \mathcal{B}] = \{ X^{(-1)} [A] : A \in \mathcal{B} \} \subset \mathcal{F}$
-\end{itemize} 	
-
-
-\begin{columns}
-\begin{column}[t]{5cm}
-	\begin{itemize}
-		\item \emph{Nie} $( \Omega, \mathcal{F}, \mathbf{P} )$ \dots
-		\item \dots ale $( \mathcal{X}, \mathcal{B}, \{\mathbf{P_\theta} : \theta \in \Theta\} )$.
-		\item
-		\item $\{\mathbf{P_\theta} : \theta \in \Theta\} \subset \mathcal{M} $
-		\item $\mathcal{M}$ - miary probablistyczne
-	\end{itemize}
-\end{column}
-\begin{column}[t]{5cm}
-	\begin{center}
-		HEllo	
-	\end{center}		
-\end{column}
-\end{columns}
-		
-\end{frame}
 
 
 
@@ -113,45 +92,5 @@
 \end{document}
   
   
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\beamertemplatearticlebibitems
-	
-		\bibitem{Glimm}
-			X. Li , J. Glimm , X. Jiao, Ch. Peyser , Y. Zhao (2010)
-			\newblock{ \it Study of crystal growth and solute precipitation through front tracking method} 
-			\newblock{Acta Mathematica Scientia 30B(2): 377-390}
-
-
-
-			\item Funkcja kowariancji $$\Gamma(\psi, \phi) = \mathbb{E} X_{\psi} X_{\phi} = \HI{\psi}{\phi}$$
-			\item Pozornie ograniczyliśmy się do 				
-		\end{itemize}
-		
-		
-		\begin{block}{Twierdzenie}
-			Funkcja kowariancji jest pół-dodatniookreślona $\sum{i,j} \Gamma()$
-		\end{block}
-		
-		
-		
-\begin{frame}
-	\frametitle{Znajdźmy kernel}
-	
-		\begin{itemize}
-			\item $\mathcal{J} := \mathbb{H}$ (rezygnujemy z literki $\mathcal{I}$)
-		\end{itemize}
-		
-		\begin{block}{Twierdzenie}
-			Dowolna przestrzeń Hilberta jest izomorficzna z $\mathrm{l}^2(A)$ dla pewnego $\mathcal{A}$:
-			$$ \mathrm{l}^2(A) = \Big\{ \mathbf{z} \in \mathbb{C}^\mathcal{A}: \int_{A} z_a \mathrm{d} \#(a) = \sum_{a \in \mathcal{A}} \mathbf{z}_a < \infty \Big\}$$
-		\end{block}
-				
-		
-		\begin{itemize}
-			\item Weźmy $\mathbb{H} = \mathbb{L}^2(\mathcal{I}, \mathcal{B}, \mu)$.	
-			\item Npx. $\mathcal{I} = \mathbb{R}^D \ni \xxx_i$		
-			\item Wtedy $\Gamma(\xxx, \xxx') = \mathbb{E}X(\phi(\xxx))X(\phi(\xxx')) = \HI{\phi(\xxx)}{\phi(\xxx')} = \int_{\mathcal{I}} \phi()$	
-		\end{itemize}	
-
-\end{frame}

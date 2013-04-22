@@ -3,18 +3,25 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Matt's Libraries %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+	% Language specifications.
 %\usepackage[textwidth=18cm, textheight=24cm, centering]{geometry}
 \usepackage{fontspec}
+\usepackage{polyglossia}
+%\setdafaultlanguage{english}
+\setmainfont[Ligatures=TeX]{Linux Libertine O}
 
-	% AMS 
+
+	% Math
 %\usepackage{amssymb} 
 \usepackage{amsmath} 
 \usepackage{amsthm}  
 \usepackage{amsfonts}
 
 
-	% Adding new colors.
+	% Text formatting
+\usepackage{lipsum}
 \usepackage{xcolor}
+\usepackage{url}
 
 \definecolor{adriatico}{rgb}{.2,.40,.90}
 \definecolor{red}{rgb}{.8,.3,.1}
@@ -28,6 +35,12 @@
 \definecolor{oldlace}{rgb}{.99,.96,.9}
 \definecolor{gummi_red}{rgb}{.99, .08, .0}	
 \definecolor{titaniumwhite}{rgb}{.99, 1, .94}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% No man's land %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{newclude}
+
 
 	% Custom enumaration styles
 %\usepackage{enumitem}
@@ -82,16 +95,12 @@
 %\usetikzlibrary{matrix}
 %\usepackage[T1]{fontenc}
 
-  % To make computer links look more funky in text - it changes their font.
-\usepackage{url}
 
   % To make a table on whole page.
 %\usepackage{pdflscape}
 %\usepackage{tabularx}
 
-  % To insert dummy text - famous Lorem Ipsum - evviva il latino! 
-\usepackage{lipsum}
-
+ 
   % Subfigures.
 %\usepackage{graphicx}
 %\usepackage{subfig}
