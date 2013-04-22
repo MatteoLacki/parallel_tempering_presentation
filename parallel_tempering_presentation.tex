@@ -1,48 +1,33 @@
-%\documentclass[xetex]{beamer}
-\documentclass[draft, xetex]{beamer}
+\documentclass[xetex]{beamer}
+%\documentclass[draft, xetex]{beamer}
+
+\usepackage{mystyle}
+\usepackage{my_commands}
 
 \mode<presentation>{
-%\usetheme{Berlin}
-\usetheme{CambridgeUS}
-\setbeamercovered{transparent}
+	%\usetheme{Berlin}
+	\usetheme{CambridgeUS}
+	\setbeamercovered{transparent}
 }
-
-
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{graphicx}
-%\usepackage[usenames,dvipsnames]{color}
-
-
-
-\usepackage{fontspec}
-\usepackage{enumitem}
 
 \setmainfont[Ligatures=TeX]{Linux Libertine O}
 
-\title[Proces Gau\ss a]{Zastosowanie procesów gaussowskich w problemie klasyfikacji i regresji}
-\subtitle{z uwzględnieniem zagadnień biologicznych}
+
+	% Title
+\title[Parrellel Tempering]{Parrellel Tempering }
+\subtitle{theory and applications}
 
 %\beamerdefaultoverlayspecification{<+->}
-\date{13 Grudnia 2012}
-\author[Matteo]{Onorevole Mateusz Łącki}
+\date{24 April 2013}
+\author[Łącki]{Mateusz Łącki}
 \institute[UW]{Uniwersytet Warszawski}
-\titlegraphic{\includegraphics[scale=.4, keepaspectratio]{eagle.jpg}}
+\titlegraphic{\includegraphics[scale=.4, keepaspectratio]{./picts/eagle.jpg}}
 
 \usefonttheme[onlylarge]{structuresmallcapsserif}
 %\usefonttheme[onlysmall]{structurebold}
 
 
-\newcommand{\xxx}{\mathbf{x}}	
-\newcommand{\www}{\mathbf{w}}	
-\newcommand{\yyy}{\mathbf{y}}	
-
-\newcommand{\X}{\mathbf{X}}	
-\newcommand{\Sy}{\mathbf{\Sigma}}	
-\newcommand{\A}{\mathbf{A}}	
-\newcommand{\eps}{\mathbf{\epsilon}}	
-\newcommand{\HI}[2]{\langle \,#1 \,|\, #2\, \rangle}	
+	
 
 \begin{document}
 \fontspec[Numbers={OldStyle}]{Linux Libertine O}
@@ -85,437 +70,14 @@
 \end{column}
 \begin{column}[t]{5cm}
 	\begin{center}
-		\begin{figure}
-		\includegraphics[scale=.6]{measurement.pdf}		
-		\end{figure}
+		HEllo	
 	\end{center}		
 \end{column}
 \end{columns}
 		
 \end{frame}
 
-\begin{frame}
-	
-	\frametitle{Sensowne uproszczenie}
 
-	\begin{itemize}
-		\item Niech $\mathcal{X} = \mathbb{R}$.
-		\item Niech miary $P_{\theta}$ będą absolutnie ciągłe względem miary Lebesgue'a $\mathbf{L}$
-		\item $$ \int_A g(x) \mathrm{d} \mathbf{P}_\theta (x) = \int_A g(x) f_{\theta} (x) \mathrm{d} \mathbf{L}(x) = \int_A g(x) f_\theta (x) \mathrm{d} x $$		
-		\item Model statystyczny to $( \mathcal{X}, \mathcal{B}, \{ f_\theta  : \theta \in \Theta\} )$.
-	\end{itemize}
-	
-	
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Bayesowski model statystyczny}
-	\begin{itemize}
-		\item Chcemy dodać rozkład dla zmiennej $\Theta$.
-		\item $$  (\mathcal{T}, \mathcal{G}, \pi) $$
-		\item Chcemy zdefiniować rozkład dla $(x, \theta) \in \mathcal{X} \times \mathcal{T}$:
-                $$f(x, \theta) = \underbrace{\pi (\theta)}_{\text{rozkład a priori}} f_\theta (x)$$
-        \item Tym samym $$f_\theta (x) = \frac{f(x, \theta)}{\pi (x)} = \underbrace{f(x | \theta)}_{\text{warunkowa gęstość}}$$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Jak dobiera się $\pi$?}
-	
-	\begin{itemize}
-			\item Dodatkowe założenie: doświadczenie w ujęciu dynamicznym
-			
-			\begin{itemize}
-				\item[1] Rozkład a priori $\pi$ jako przypuszczenie.
-				\item[2] Przyroda ujawnia dane dotyczące zjawiska $$\{ X_1 = x_1, \dots , X_n = x_n \}$$		
-				\item[3] Uaktualniamy przypuszczenie o świecie $$\pi(\theta | x_1, \dots, x_n)$$ 
- 			\end{itemize}
-
-			\item[] Warunkowa niezależność próbki $ X_1 ,\dots, X_n \sim f(x | \theta) $
-			\item[] $$ f(\theta, x_1, \dots, x_n) = \pi(\theta) f(x_1 | \theta) \dots f(x_n | \theta)$$
-			\item[] Funkcja wiarygodności: $f(x_1, \dots, x_n | \theta) = f(x_1 | \theta) \dots f(x_n | \theta) $
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-
-	\begin{itemize}
-		\item Warunkowe gęstości podlegają zasadzie Bayes'a $$\rho (a | b) = \frac{\rho (b|a) \rho(a)}{\rho(b)} \propto \rho (b|a) \rho(a)$$
-		\item To równanie zapewnia dynamikę!
-		\item $$ \pi(\theta | x_1, \dots, x_n) \propto \pi(\theta)  f(x_1 | \theta) \dots f(x_n | \theta) $$
-	\end{itemize}
-
-\end{frame}
-
-\subsection{Przykład oszukany}
-
-\begin{frame}
-	\frametitle{Przykład oszukany: $X$ o rozkładzie dyskretnym.}
-	\begin{itemize}
-		\item $ X_1 ,\dots, X_n \sim f(x | \theta) = \theta^k \frac{\exp(-\theta x)}{k!} \sim \text{Poiss}(\theta)$
-		\item $$ f(x_1, \dots, x_n | \theta) = \prod_{i=1}^n \theta^k \frac{\exp(-\theta x_i)}{k!} \propto \theta^{kn} \exp(-\theta \sum_{i=1}^n x_i)$$
-		\item Biorąc $\Theta \sim \Gamma(\alpha,\beta)$ otrzymujemy $$\pi(\theta) \propto \theta^{\alpha-1} \exp (- \theta \beta)$$
-		\item Oraz gęstość a posteriori: $$\pi(\theta | x_1, \dots, x_n) \propto \pi(\theta)  f(x_1 \dots, x_n | \theta) \propto \theta^{kn+ \alpha - 1} \exp (- \theta (\beta + \sum_{i=1}^n x_i))$$
-		\item $$\theta|x_1, \dots, x_n \sim \Gamma (\alpha + kn, \beta + \sum_{i=1}^n x_i)$$		
-		
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Podsumowanie ideologiczne ugruntowane w rysunku}
-	\begin{figure}
-		\includegraphics[scale=.7]{ideology.pdf}
-	\end{figure}
-\end{frame}
-
-\subsection{Przykład właściwy: standardowa regresja liniowa}
-
-\begin{frame}
-	\frametitle{Zagadnienie regresji liniowej alla Bayes}
-
-	\begin{itemize}
-		\item $\text{Obserwowane dane} = \text{zbiór treningowy} = \mathcal{D} = \{ (\mathbf{x}_i, y_i): i = 1, \dots, n\}$
-		\item 'Model' to $$f(\xxx_i) = \xxx_i^T \www \text{  ,  } y_i = f(\xxx_i) + \epsilon_i$$
-		
-		\item $$\eps \sim \mathcal{N}(\mathfrak{0}, \sigma_n \mathfrak{I})$$
-		\item Niech $\X = [\xxx_1, \dots, \xxx_n]$
-		\item Obliczamy wiarygodność: $p(\yyy | \X, \www) = $
-		\item $$= \prod_{i=1}^n p(y_i | x_i, \www) \propto \prod_{i=1}^n  \exp(- \frac{(y_i - \xxx_i^T \www)^2}{2\sigma_n^2}) = \exp( - \frac{1}{2\sigma_n^2} ||\yyy- \X^T \www||^2)$$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{itemize}
-		\item Krótko: $$\yyy | \X, \www \sim \mathcal{N}(\X^T \www, \sigma_n^2 \mathfrak{I} )$$
-		\item Dobieramy 'dobry rozkład' a priori: $$\www \sim \mathcal{N}(\mathfrak{0}, \Sigma)$$
-		\item $$\pi(\www) \propto \exp (- \frac{1}{2}\www^T \Sigma^{-1} \www)$$
-		\item Założenie: rozkład apriori niezależny od danych $\X$
-		\item Rozkład a posteriori $$\pi(\www | \X, \yyy) \propto p(\yyy| \X, \www) \pi(\www | \X) = p(\yyy| \X, \www) \pi(\www)$$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{itemize}
-		\item $\pi(\www | X,w) \propto \exp( - \frac{1}{2\sigma_n^2} ||\yyy- \X^T \www||^2)\exp (- \frac{1}{2}\www^T \Sigma^{-1} \www)$
-		\item To gęstość gau\ss owska: starczy uzupełnić do kwadratu - rozwinąć w szereg Taylora wokół średniej:
-		\item $$g(\www) = \frac{1}{2\sigma^2_n}( \yyy^T\yyy - 2 \www^T X^T y + \www^T X X^T \www) + \frac{1}{2}\www^T \Sigma^{-1} \www$$
-		\item
-		\item $$\nabla g = \frac{1}{\sigma^2_n} (- X^T y + X X^T \bar{\www}) + \Sigma^{-1} \bar{\www} = \mathfrak{0}$$
-		\item $$\frac{1}{\sigma_n^2} \X^T \yyy = (\frac{1}{\sigma^2_n} \X \X^T + \Sigma^{-1}) \bar{\www} \equiv \A \bar{\www}$$
-		\item $$ \bar{\www} = \frac{1}{\sigma^2_n} \A^{-1} \X^T \yyy$$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{itemize}
-		\item $$\nabla \nabla^T g = \frac{1}{\sigma_n^2} \X \X^T + \Sigma^{-1} = \A $$
-		\item 
-		\item Zatem $g(\www) = (\www - \bar{\www})^T \A (\www - \bar{\www}) $
-		\item 
-		\item Stąd $$ \www | \X, \yyy \sim \mathcal{N}(\frac{1}{\sigma^2_n} \A^{-1} \X^T \yyy, \A^{-1})$$
-		\item
-		\item Bowiem gęstość Gau\ss a  $\propto \exp \Big[(a-\bar{a})^T B^{-1} (a - \bar{a}) \Big]$ .
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Prognoza}
-	
-	\begin{itemize}
-		\item Mamy $\www | \X, \yyy \sim \mathcal{N}(\frac{1}{\sigma^2_n} \A^{-1} \X^T \yyy, \A^{-1})$ 
-		\item Prognoza dla punktu $\xxx_*$ uwzględnia zależność $f_* \equiv f(\xxx_*) = \xxx_*^T \www$
-	\end{itemize}
-	
-	\begin{block}{Ogólny fakt}
-		Jeśli $\mathbf{G} \sim \mathcal{N}(\mathbf{b}, \Sigma )$ to 	
-		$$ \mathbf{G}^T \mathbf{x} =  \sum_{i=1}^n G_i x_i \sim \mathcal{N}( \mathbf{m}^T \xxx, \xxx^T \Sigma \xxx) $$
-		Dowód: wzór na gęstość przy gładkiej zamianie zmiennych $(X_1, \dots, X_n) \mapsto (X_1 + \dots + X_n, X_2, \dots, X_n)$ i odcałkowanie po $(X_2, \dots, X_N)$\dots
-	\end{block}
-	\begin{center}
-		\emph{Wniosek} $f_{*} \sim \mathcal{N}(\frac{1}{\sigma^2_n} \xxx_*^T \A^{-1} \X^T \yyy, \xxx_*^T \A^{-1} \xxx)$	
-	\end{center}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Uogólnienie w stronę "kernel tricka"}
-	
-	\begin{itemize}
-		\item Przeprowadźmy jakąś operacje na danych przed budową modelu
-		\item $\phi: \mathbb{R}^D \mapsto E$, $\dim E = N$
-		\item Oznaczenia: $\Phi = [\phi(\xxx_1), \dots, \phi(\xxx_n)] \equiv [ \phi_1, \dots, \phi_n ]$, $\phi(\xxx_*) = \phi_*$
-		\item $$f(\xxx_i) = \phi(\xxx_i)^T \www$$
-		\item Wówczas $$f_* | x_*, \X, \yyy \sim \mathcal{N}(\frac{1}{\sigma_n^2} \phi_*^T \A^{-1} \Phi \yyy, \phi_*^T \A^{-1} \phi_* )$$
-		\item $$\A = \sigma^2_n \Phi \Phi^T + \Sigma^{-1}$$
-	\end{itemize}
-	
-\end{frame}
-
-
-\begin{frame}
-	\begin{itemize}
-		\item Niech $K \equiv \Phi^T \Sigma \Phi$. 
-		\item $$\frac{1}{\sigma_n^2} \phi_*^T \A^{-1} \Phi \yyy = \overbrace{\phi_*^T \Sigma \Phi} (\overbrace{K} + \sigma^2_n \mathfrak{I})^{-1} \yyy$$
-		\item $$\phi_*^T \A^{-1} \phi_* = \underbrace{\phi_*^T \Sigma \phi_*} - \underbrace{\phi_*^T \Sigma \Phi} (\underbrace{K} + \sigma^2_n \mathfrak{I})^{-1} \underbrace{\Phi^T \Sigma \phi_*}$$
-		\item Zakreślono macierze o wyrazach postaci $\phi( \xxx )^T \Sigma \phi( \xxx ' )$
-		\item $\Sigma$ - półdodatnio-określona!
-		\item Mamy formę iloczynu skalarnego: $\phi(\xxx)$ - wektor z przestrzeni liniowej.
-		\item W ogólności $(\mathbb{H}, \langle \, |\, \rangle)$
-	\end{itemize}
-\end{frame}
-
-
-
-\section[Gau\ss]{Ogólna Teoria procesów Gau\ss a}
-
-\subsection{Widziane z Rosji}
-
-\begin{frame}
-	\frametitle{Co teraz?}
-	\begin{itemize}
-		\item Ładne narzędzie do przeprowadzania analiz
-		\begin{itemize}
-			\item Dynamiczny aspekt: nauka modelu
-			\item Łatwe do implementacji
-		\end{itemize}
-		\item Uogólnienie : 
-		\begin{itemize}
-		\item[a)] zobaczyć związki z innymi modelami uczenia maszyn
-		\item[b)] nadać innym modelom interpretację probabilistyczną
-		\item[c)] przybliżyć statystykom data-mining
-		\item[d)] stworzyć data-mining uwzględniający Teorię
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Proces gau\ss owski w pełnej krasie}
-	
-	\begin{block}{Definicja}
-		Niech
-		\begin{itemize}
-			\item $\Big(\Omega, \mathcal{F}, \mathbf{P}\Big)$ - przestrzeń probabilistyczna.
-			\item $\Big(\mathbb{R}, \mathcal{B}\Big)$ - prosta z zbiorami borelowskimi
-		\end{itemize}		
-	
-		Scentrowany proces gau\ss owski na zbiorze $\mathcal{I}$ to zbiór zmiennych losowych $X = \{ X_i : \Omega \mapsto \mathbb{R}: i \in \mathcal{I} \}$ takich, że:
-		\begin{itemize}
-			\item[1.] $X_i$ mierzalna względem $\mathcal{F}$: $X^{-1} [\mathcal{B}] \subset \mathcal{F}$
-			\item[2.] dowolny skończony podzbiór $\{t_1, \dots, t_n \} \subset \mathcal{I}$ wyznacza zmienną losową 
-			$$(X_{i_1}, \dots, X_{i_n}) \sim \mathcal{N}(\mathbf{m}(t_1, \dots, t_n), \Sigma(t_1, \dots, t_n))$$
-			\item[3.] owe zmienne losowe tworzą zgodną rodzinę rozkładów
-		\end{itemize}				
-
-	\end{block}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Twierdzenie Колмогорова o istnieniu procesu}
-	
-	Wprowadźmy oznaczenia:	
-
-		\begin{itemize}
-			\item przy oznaczeniu $\mathbf{P}_X (A) = P(X^{-1} [A] ) = \mathbf{P}(X \in A) $
-			\item oraz jeśli $T \equiv \{ t_1, \dots, t_n\} \subset \mathcal{I}$ weźmiemy $X_T \equiv (X_{t_1}, \dots, X_{t_n})$
-		\end{itemize}
-		
-	\begin{block}{Zgodność}
-		Rodzina zmiennych losowych $\mathcal{M}$ jest zgodna, gdy jest zamknięta na branie rozkładów brzegowych, tzn. :
-		\begin{itemize}
-			\item Jeśli $A, B \subset \mathcal{I}$, oraz $A \subset B$
-			\item to $$\mathbf{P}_{X_A}(\circ) = \mathbf{P}_{X_B} (\circ, X_{B\setminus A} \in \mathbb{R}^{B \setminus A})$$
-			\item oraz $$\mathbf{P}_{X_A}, \mathbf{P}_{X_B} \in \mathcal{M}$$
-		\end{itemize}				
-		
-		Jeśli rodzina $\mathcal{M}$ jest zgodna to istnieje $\Big(\Omega, \mathcal{F}, \mathbf{P}\Big)$, że $X$ to proces na $\mathcal{M}$. 
-	\end{block}
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Zastosowanie}			
-	
-	\begin{block}{Twierdzenie}
-		Istnieje proces niezależnych zmiennych losowych, bowiem
-		$$\mathbf{P}_{X_A}(\circ) = \prod_{t \in A} \mathbf{P}_{X_t} (\circ) = \prod_{t \in A} \mathbf{P}_{X_t} (\circ) \prod_{s \in B \setminus A} \mathbf{P}_{X_s} (\mathbb{R}) = \mathbf{P}_{X_B} (\circ, X_{B\setminus A} \in \mathbb{R}^{B \setminus A})$$
-	\end{block}
-	
-	\emph{Wniosek Idelogiczny}: symulowanie dowolnej ilości zmiennych losowych na komputerze ma odzwierciedlenie w teorii.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Nasz rosyjski łącznik}
-	
-	\begin{center}
-		Андрей Николаевич Колмогоров \\
-		1903 - 1987
-	\end{center}
-	\begin{figure}
-		\includegraphics[scale=.4]{kolmogorov.jpg}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Co wiemy, czego nie wiemy?}
-	
-	\begin{itemize}
-		\item Wiemy co to proces.
-		\item Wiemy, że istnieje Biały Szum $$\eps = \{\epsilon_i : i \in \mathcal{I} \}$$
-		\item $$\eps_T \sim \mathcal{N}\Big( \mathfrak{0}_{|T|}, \sigma^2_{|T|}\mathfrak{I}_{|T|}\Big)$$
-		\item Nie wiemy, co to ma wspólnego z iloczynami skalarnymi $(\mathbb{H}, \langle \, |\, \rangle)$.
-		\item Nie wiemy, co to ma wspólnego z wnioskowaniem bayesowskim.
-	\end{itemize}
-\end{frame}
-
-\subsection{Widziane z Niemiec}
-
-
-\begin{frame}
-	\frametitle{Nasz niemiecki łącznik}
-	
-	\begin{center}
-		David Hilbert \\
-		1862 - 1843
-	\end{center}
-	\begin{figure}
-		\includegraphics[scale=.5]{hilbert.jpg}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Na problemy - Hilbert.}
-	
-	\begin{itemize}
-		\item $\mathcal{I}$ zbyt ogólne - za mało struktury by coś o tym sensownie powiedzieć.
-	 	\item Niech $\mathcal{I} = (\mathbb{H}, \HI{\circ}{\circ})$ to przestrzeń Hilberta.
-	    \item $\mathbb{H}$ liniowa, unormowana $||\psi|| = \sqrt{\HI{\psi}{\psi}}$, zupełna.
-	 
-		\item Motywacja: $\phi_* = \phi(\xxx_*) \in \mathbb{H}$.
-		\item $\HI{\phi}{\psi}$ - dwuliniowa, (pół-)dodatnio-określona forma na $\mathbb{H}$, ciągła.
-	\end{itemize}
-	
-	\begin{block}{Twierdzenie}
-		Istnieje proces Gau\ss a $X = X_{\mathbb{H}}$ taki, że
-		\begin{itemize}
-			\item[(i)] $h \mapsto X(h)$ jest liniowe.
-			\item[(ii)] $\forall h\in \mathbb{H}$ zachodzi $$X_h \sim \mathcal{N}(0, ||h||^2)$$ 	
-		\end{itemize}		 
-	\end{block}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Dowód}
-	
-		\begin{itemize}
-			\item Weźmy bazę ortonormalną w $\mathbb{H} = \overline{\mathrm{lin}} ( \eta_n) $ t. że $\HI{\eta_i}{\eta_j} = \delta_{ij}$
-			\item $$ h = \sum_{n=1}^\infty \HI{\eta_n}{h}\eta_n$$	
-			\item Weźmy biały szum $G = \{G_n \}_{n=1}^\infty$ z jego przestrzenią $(\Omega, \mathcal{F}, \mathbf{P})$.
-			\item Połóżmy $X_h = \sum_{n=1}^{\infty} G_n \HI{h}{\eta_n} = \lim_{K \rightarrow \infty} \sum_{n=1}^{K} G_n \HI{h}{\eta_n} = \lim_{K \rightarrow \infty} S_K$	.	
-			\item Powyższa suma to granica w $\mathbb{L}^2(\Omega, \mathcal{F}, \mathbf{P})$, bowiem:
-			\item $\mathbb{E}\Big( S_K - S_k\Big)^2 =\mathbb{E}\Big(\sum_{n = k}^{K} G_n \HI{h}{\eta_n} \Big)^2 = \sum_{n=k}^K \HI{h}{\eta_n}^2 \underbrace{\mathbb{E} G_n^2}_{=1} - 2 \sum_{k \leq n < m \leq K} \HI{h}{\eta_n}\HI{h}{\eta_m} \underbrace{\mathbb{E} G_m G_n}_{=\mathbb{E} G_m \mathbb{E}G_n = 0}=$
-			\item $= \sum_{n=k}^K \HI{h}{\eta_n}^2 \rightarrow 0$ 
-			\item bowiem $||h||^2 = \sum_{n=1}^{\infty} \HI{h}{\eta_n}^2 < \infty$.
-		\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Koniec dowodu}
-		\begin{itemize}
-			\item Podobnie pokazujemy, że $$\mathbb{E} X_h^2 = \mathbb{E} \lim_{K \rightarrow \infty}\Big(\sum_{n = 1}^{K} G_n \HI{h}{\eta_n} \Big)^2 = \lim_{K \rightarrow \infty} \sum_{n=k}^K \HI{h}{\eta_n}^2 = ||h||^2$$
-			\item Oraz $\mathbb{E} X(h) = 0$.
-			\item Zamykamy dowód stwierdzeniem, że $\mathbb{L}^2$ granica zmiennych gaussowskich jest gaussowska: to wynika z analizy funkcji charakterystycznych $\square$
-			\item \emph{Uwaga:} analogiczne funkcja kowariancji procesu $X$ to $$\mathbb{E}X(\psi)X(\phi) = \HI{\psi}{\phi}$$
-		\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Przykład działania: ruch Browna na półprostej.}
-	
-		\begin{itemize}
-			\item Weźmy $\mathbb{H} = \mathbb{L}^2(\mathbb{R}_+, \mathcal{B}(\mathbb{R}_+), \lambda)$.	
-			\item Weźmy $B_t = X(\chi_{[0,t]})$ $\mathbb{P}$ prawie na pewno.
-			\item Wtedy $$B_t \sim \mathcal{N}(0, \sigma^2)$$
-			\item $$\sigma^2 = ||\chi_{[0,t]}||^2 = \HI{\chi_{[0,t]}}{\chi_{[0,t]}}) =  \int_{\mathcal{I}} \chi_{[0,t]}(x) \chi_{[0,t]}(x)\mathrm{d}\,x = t$$
-			\item $$\Gamma(t_1, t_2) := \mathbb{E}X(\chi_{[0,t_1]})X(\chi_{[0,t_2]}) = \HI{\chi_{[0,t_1]}}{\chi_{[0,t_2]}} =  $$	
-			\item $$\int_{\mathcal{I}} \chi_{[0,t_1]}(x) \chi_{[0,t_2]}(x)\mathrm{d}\,x = \lambda([0, t_1 \wedge t_2]) = t_1 \wedge t_2$$
-			\item W szczególności $B_t - B_s \perp B_s$, bo $\chi_{(s, t]}\chi_{[0,s]} \equiv 0$.
-		\end{itemize}	
-
-\end{frame}
-
-\begin{frame}
-	\frametitle{Intuicja}
-	
-	\begin{itemize}
-		\item Istnieją powiązania pomiędzy teorią przestrzeni Hilberta a teorią procesów.
-		\item Gdzie tu Bayes?
-		\item Jeśli $\mathbb{H}$ - przestrzeń funkcji
-		\item to $X$ to zmienna losowa o wartościach w zbiorze funkcji!
-	\end{itemize}
-\end{frame}
-
-\section[Synteza]{Synteza pojęć}
-
-\subsection[Przykład kontynuowany]{Bayes-Gau\ss \,\,\,Ensemble Exemple}
-
-\begin{frame}
-	\frametitle{Powrót do regresji Bayesa: model bez szumu.}
-	\begin{itemize}
-		\item $$\yyy = f(\xxx) = \phi(\xxx)^T \www = F_{\xxx}(\www)$$
-		\item Nasz proces gau\ss owski to
-		\item $$X(\xxx) = f(\xxx) = F_{\xxx}(\www) \sim \mathcal{N}(\mathfrak{0}, \phi(\xxx)^T \Sigma \phi(\xxx))$$
-		\item bo $$\mathbb{E}(f(\xxx)) = \phi(x)^T \mathbb{E} \www = \mathfrak{0}$$ 
-		\item zaś funkcja kowariancji to $$\Gamma(\xxx, \xxx') = \mathbb{E}f(\xxx)f(\xxx') = \phi(\xxx)^T [\mathbb{E} \www \www^T] \phi(\xxx) = \phi(\xxx)^T \Sigma \phi(\xxx') .$$
-		\item Funkcja kowariancji wyznacza rozkład na funkcjach $f$.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Predykcja w modelu bez szumu}
-	
-	\begin{itemize}
-		\item $$(f, f_*)|\X, \X_* \sim \mathcal{N}(\mathfrak{0}, \left [\begin{matrix}
-		\Gamma(\X, \X) & \Gamma(\X, \X_*)\cr
-		\Gamma(\X_*, \X) & \Gamma(X_*, \X_*)\cr
-		\end{matrix} \right])$$
-		
-		\item W przypadku gau\ss owskim $$f_* | f, \X, \X_* \sim \mathcal{N}(\overline{f_*} , \mathbb{V}(f_*|f,\X,\X_*))$$
-		\item gdzie $\overline{f_*} \equiv \mathbb{E}(f_*|f,\X,\X_*) = \Gamma(\X_*,\X)\Gamma(\X, \X)^{-1} (f \,|\,\X)$
-		\item ($f \,|\,\X$ to p.n. wektor skończenie-wymiarowy)
-		\item oraz $\mathbb{V}(f_*|f,\X,\X_*) \equiv \Gamma(\X_*, \X_*) - \Gamma(X_*, X)\Gamma(\X, \X)^{-1} \Gamma(\X, \X_*)$
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Predykcja w modelu zaszumionym}
-	
-	\begin{itemize}
-		\item $$\Gamma(\yyy, \yyy) = \mathbb{E}f(\xxx)f(\xxx') = \phi(\xxx)^T [\mathbb{E} \www \www^T + \sigma_n^2 \mathfrak{I}] \phi(\xxx) =$$
-		\item $$= \phi(\xxx)^T \Sigma \phi(\xxx') \sigma_n^2 \phi(\xxx)^T \phi(\xxx') $$
-		\item $$(\yyy, f_*)|\X, \X_* \sim \mathcal{N}(\mathfrak{0}, \left [\begin{matrix}
-		\Gamma(\X, \X) + \sigma^2_n \mathfrak{I}& \Gamma(\X, \X_*)\cr
-		\Gamma(\X_*, \X) & \Gamma(X_*, \X_*)\cr
-		\end{matrix} \right])$$
-		
-		\item W przypadku gau\ss owskim $$f_* | f, \X, \X_* \sim \mathcal{N}(\overline{f_*} , \mathbb{V}(f_*|f,\X,\X_*))$$
-		\item gdzie $\overline{f_*} \equiv \mathbb{E}(f_*|\yyy,\X,\X_*) = \Gamma(\X_*,\X)[\Gamma(\X, \X)+ \sigma_n^2 \mathfrak{I}]^{-1} \yyy$
-		\item oraz $\mathbb{V}(f_*|f,\X,\X_*) \equiv \Gamma(\X_*, \X_*) - \Gamma(X_*, X)[\Gamma(\X, \X)+\sigma_n^2 \mathfrak{I}]^{-1} \Gamma(\X, \X_*)$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Pełna redukcja do wnioskowania bayesowskiego}
-	
-	\begin{itemize}
-		\item $$\Gamma(C,D) = \Phi(C)^T \Sigma \Phi(D)$$
-	\end{itemize}
-\end{frame}
-
-\section[Biologia]{Zastosowania w biologii molekularnej}
-
-\subsection[Dobre kowariancje]{Kowariancje na przestrzeni słów nad alfabetem}
 
 \begin{frame}
 	\frametitle{Under construction}
@@ -525,6 +87,7 @@
 \section[Bibliografia]{Bibliografia}
 
 \begin{frame}
+
 	\frametitle{Hello Kitchen}
 	
 	
@@ -532,16 +95,19 @@
 
 		\beamertemplatebookbibitems
 		
-		\bibitem{Rasmussen}
-			Carl Edward Rasmussen, Christopher K. I. Williams
-			\newblock{ \it Gaussian Processes for Machine Learning}
-			\newblock{Mit Press}
-			
-	\begin{center}
-		\includegraphics[scale=.3, keepaspectratio]{cover.jpg}	
-	\end{center}
+			\bibitem{promo}
+	  			Błażej Miasojedow, Eric Moulines, Matti Vihola,
+	 			\emph{Adaptive Parallel Tempering Algorithm},
+	  			Arxive.
+
+		\beamertemplatearticlebibitems
+		
+			\bibitem{geyer}  
+				Charles J. Geyer,
+				\emph{Markov Chain Monte Carlo Lecture Notes}.  
 
 	\end{thebibliography}
+
 \end{frame}
 
 \end{document}
