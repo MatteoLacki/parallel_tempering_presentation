@@ -1,0 +1,75 @@
+
+\section*{My understanding of the problem}
+
+\subsection*{Target}
+Let $(\Omega, \mathfrak{F})$ be a measurable space, $\Omega$ - a subset of a Polish space, $\mathfrak{F}$ - Borel subsets, hopefully countably-generated, $\mathcal{I} = [0,1]$.
+
+Suppose that we want to draw sample from a given distribution $ \pi: \mathfrak{F} \mapsto \mathcal{I}$. We assume that $\pi$ is absolutely continuous with respect to some measure on $\mathbb{R}^n$ and call $\pi$ its appropriate density function. We assume to know $\pi$ up to its proportionality factor. If $\pi$ is multi-modal then the usual Metropolis-Hasting-Green algorithm might get stuck in one of $\pi$'s modes and renders completely erroneous results.
+
+
+\subsection*{Solution's Ideology} 
+The Parallel Tempering algorithm is based on the idea of observing a Markov chain over the product space $$(\Omega^L, \mathfrak{F}^{\otimes L}, \pi_\beta)$$
+
+
+where 
+	$$\mathfrak{F}^{\otimes L} \equiv \underbrace{\mathfrak{F} \otimes \dots \otimes \mathfrak{F}}_{\text{$L$ times}},$$
+is the usual product sigma algebra, and finally 
+
+\begin{assumptions}
+	\item $\pi_\beta \propto \pi^{\beta_1} \times \dots \times \pi^{\beta_L},$\label{product form}
+\end{assumptions}	
+
+where $\beta = (\beta_1 , \dots , \beta_L)$ are inverse temperatures s.t. $1 = \beta_1 > \dots > \beta_L > 0$, so that the temperatures are growing, $1 = T_1 < \dots < T_L < \infty$.
+
+ We do not assume to know the normalising constants for each $\pi^{\beta_l}$, since we don't know it for $\pi$ itself.
+
+The Markov chain $X \equiv \{ X^{[k]}\}_{k \geq 0}$ has $\Omega^L$ for its state-space \footnote{For the algorithm step numbering we shall henceforth use the square brackets notation.}. Thus $$X^{[k]} = (X_1^{[k]}, \dots, X_L^{[k]}).$$
+
+The idea behind the algorithm is that of simulating the MC $X$ so that its coordinates with higher temperatures influence the coordinates with lower temperatures. This influence should be beneficial because coordinates with higher temperatures are drawn from distributions that are "less multi-modial" in the sense that
+
+\begin{assumptions}[resume]
+	\item $\pi > 0$ on its support \dots
+\end{assumptions}
+	
+
+\begin{itemize}	
+	\item then $\pi^{\beta_k} > \pi$ for $k \geq 2$\dots
+	\item so $\alpha_{\beta_1}(x,y) = 1 \wedge \frac{\pi(y)}{\pi(x)} = \frac{\pi(y)}{\pi(x)} <  (\frac{\pi(y)}{\pi(x)})^{\beta_k} = 1 \wedge (\frac{\pi(y)}{\pi(x)})^{\beta_k} = \alpha_{\beta_k}(x,y)$ if only $\pi(y) < \pi(x)$, and $\alpha_{\beta_1}(x,y) = \alpha_{\beta_k}(x,y)$ otherwise. Therefore the probability of accepting the proposal $y$ is significantly higher in case of the more tempered chains when $\frac{\pi(y)}{\pi(x)} < 1$.
+	\item If we suppose that our distribution is multimodial, then simulating $\pi^{\beta_k}$ should genuinely enlarge the regions from which the proposals would get accepted. 
+	\item However, if $\pi$'s modes are separated by regions as vast as to contain most of the proposal's probability, and yet bearing some insignificant amount of $\pi$'s mass, then the algorithm will stay local. This could be the case of modes separated by vast regions of $\pi$-measure zero. 
+	\item Since the simulations will be carried out in the computer's finite arithmetic, it's possible that the mass of certain regions will be rounded down to zero, e.g. where the density is below the smallest representable number.  
+\end{itemize}  
+
+\begin{questions} 
+	\item Z powodu ostatniego punktu nadal optuję za sprawdzeniem pomysłu z homotopiami. Ale jeśli dobrze rozumiem, to w zasadzie nie widzę żadnego sposobu, aby znaleźć modę jakiegoś rozkładu zupełnie nic nie wiedząc o jakiś jego dodatkowych własnościach. To trochę tak, jakby badać rozkład czegoś tak skupionego w nieznacznych miejscach, jak ślady człowieka pierwotnego: na razie można szukać śladów w jaskiniach, bo go znaleźliśmy w jaskiniach, a być może jednak więcej śladów byłoby na piędziesiątym metrze poniżej szczytu góry, która kiedyś mogła mieć co najmniej 100 metrów. Tak sobie narzekam w zasadzie na słabość ludzkiej wiedzy, gdy się czegoś nie wie.
+	\item Tym samym powstaje naturalne pytanie, do czego w zasadzie będziemy stosować tę metodę? Bo może w tych problemach rozkłady nie są tak zupełnie dowolne.
+\end{questions}
+
+
+\subsection*{Solution's Details}
+
+	The update mechanism consists of two stages. Assume that the algorithm has reached $n^\text{th}$ step, $X^{[n]}$. Following notation used in \cite{promo} we introduce two kernels that act subsequently on the MC
+	
+	$$X^{[n-1]} \overset{\swap}{\rightarrow} \widetilde{X}^{[n-1]} \overset{\metro}{\rightarrow} X^{[n]}.$$
+	
+	We shall refer to $\swap$ and $\metro$ as to the swap kernel and the random-walk kernel respectively.
+
+\subsubsection*{The random-walk kernel}
+	
+Assume $A_i \in \mathfrak{F}$ and $x \in \Omega^L$. Then $$\metro (x, A_1 \times \dots \times A_L) = \prod_{l=1}^L \metrobis{l}(x_l, A_l),$$
+where $\metrobis{l}(x_l, A_l)$ corresponds to standard Metropolis kernel, as in \cite{geyer}. 
+
+In more detail 
+
+$$\metrobis{l}(x_l, A_l) \equiv \int_A \alpha_{\beta_l} (x_l, y_l) q_{\Sigma_l} (y_l - x_l) \mathrm{d }y_l + \delta_x (A) \int [1 - \alpha_{\beta_l} (x_l, y_l)] q_{\Sigma_l} (y_l - x_l) \mathrm{d }y_l ,$$
+the probability of accepting the update being precisely 
+\begin{equation}\label{acceptance prob}
+	\alpha_{\beta_l} (x_l, y_l)  \equiv 1 \wedge \frac{\pi^{\beta_l}(y_l)}{\pi^{\beta_l}(x_l)}.
+\end{equation}
+
+
+In the above equations the proposal distribution being used, following notation from \cite{geyer}, is $q(x_l,y_l) = q_{\Sigma_l} (y_l - x_l)$, where $q_{\Sigma_l}$ is the density of $\mathcal{N}(0, \Sigma_l)$. 
+
+The simple form of Eq. \ref{acceptance prob} stems from proposal distribution symmetry, $$q(x_l,y_l) = q(y_l,x_l).$$
+
+As indicated in \cite{promo}, the execution of $\metro$ requires separate simulation of $\metrobis{l}$ for each of the coordinate chains,  $\widetilde{X}^{[n-1]}_l$.

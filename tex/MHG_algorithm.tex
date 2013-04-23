@@ -1,0 +1,47 @@
+\subsubsection*{Interlude: detailed description of the Metropolis-Hastings-Green algorithm}
+
+	The ideas behind the random-walk kernel were straightforward. Before passing to the detailed description of the swap kernel, we give here a brief account of how the MHG algorithm works. The description together with the notation are taken from \cite{geyer}, pages 79-81. The introduction of this notation will be of considerable help in the understanding of the next section. 
+
+	The algorithm aims at generating samples from any distribution $\rho$ on measurable space,
+$$(\Gamma, \mathfrak{G}),$$
+	where $\Gamma \subset \mathbb{R}^n$ and $\mathfrak{G}$ is the appropriate borel $\sigma$-algebra. We suppose that we know $\rho$ up to a constant, so that $\rho = \frac{\eta}{\eta(\omega)}$, where $\eta$ is any finite real measure \footnote{In order to avoid confusion, in this section we use different notation for spaces and distributions than it was the case before. In the forthcoming applications, we will take $\Gamma$ to be $\Omega^L$, $\rho$ equal to $\pi_\beta$ and so on \dots}, 
+
+$$\rho: \mathfrak{G} \mapsto \mathbb{R}_{+}.$$  
+	
+	To generalise the notion of Hasting's ratio, $R(x,y)$, one introduces first a suitable measure $\mu$ on the measurable space $$(\Gamma^2, \mathfrak{G}^{\otimes 2}),$$ 
+precisely where we assume our current-state $x$ and proposal $y$ to live together. Since our understanding of $y$ is that it is some value conditioned on the current-state $x$, the natural choice for $\mu$ is that of a regular conditional measure
+
+$$\mu(\mathrm{d }x, \mathrm{d }y)   \equiv \eta (\mathrm{d} x) Q(x, \mathrm{d } y),$$
+where $Q(x,A)$ is our proposal kernel, possibly substochastic.
+ 
+ 
+We also need a coordinate-swapping mapping $\phi: \Gamma^2 \mapsto \Gamma^2$ given by $$\phi(x,y) = (y,x),$$ which is obviously measurable, being continuous. Our understanding of the Green's ratio is now that of
+
+$$R(x,y) \equiv	\frac{\mathrm{d }(\mu \circ \phi^{-1})}{\mathrm{d }\mu} (x,y) = \frac{\rho(\mathrm{d y} )Q(y, \mathrm{d }x)}{\rho(\mathrm{d }x) Q(x, \mathrm{d }y)},$$
+where $\phi^{-1}$ is the counter-image function related to $\phi$ and the derivative is understood in the Radon-Nikodym sense. 
+
+Since we want to use the MHG algorithm with the state-dependent mixing, we shall equip both $Q$ and $R$ with additional indices $k$ that belong to $\mathcal{K}$, a set\footnote{Which can be infinite. In that case the forthcoming sums should be understood as integrals with respect to the counting measure.}.  
+
+We require that
+
+\begin{itemize}
+	\item $Q_k (x,S)$ is known for all $k$,
+	\item $\forall_{x \in \Gamma} \underset{ k \in \mathcal{K}}{\sum} Q_k (x,S) \leq 1$,
+	\item For all $k \in \mathcal{K}$ $$R_k (x,y_k) \equiv \frac{\rho(\mathrm{d } y_k)Q_k (y_k, \mathrm{d }x)}{\rho(\mathrm{d } x)Q_k (x, \mathrm{d }y_k)}$$ is known ans possible to evaluate for any $x$ and $y_k$ \footnote{We introduce an extra index in $y_k$ to underline the potential difference between proposals under different kernels $Q_k$.},
+	\item For each $x$ and $k$ its possible to draw from $$P_k(x, \circ) \equiv \frac{Q_k (x, \circ)}{Q_k (x, \Gamma)}$$
+\end{itemize}
+
+If these requirements are fulfilled, then the MHG update goes as follows
+
+\begin{algorithm}
+	\item Simulate random index $K$ with probability $\mathbb{P}( K = k ) = Q_k (x,\Gamma)$.
+	\item[] With probability $1-\underset{k \in \mathcal{K}}{\sum} Q_k (x,\Gamma)$ skip the remaining steps and stay at $x$.
+	\item Simulate $Y \sim P_K (x, \circ)$.
+	\item Calculate $R_K (x,Y)$.
+	\item Accept $Y$ with probability $1\wedge R_K (x,Y)$.
+\end{algorithm}
+
+	The kernel of the MHG update is of the following form
+	
+	$$P(x,A) \equiv \underset{k \in \mathcal{K}}{\sum} \int_A \alpha_k (x,y_k) Q_k(x, \mathrm{d }y_k) + \delta_x (A) \Big(1 - \underset{k \in \mathcal{K}}{\sum} \int_{\Omega} \alpha(x,y_k) Q_k(x,\mathrm{d }y_k) \Big), $$
+	where $\alpha(x,y_k) \equiv 1\wedge R_K (x,y_k)$. Note that this kernel is stochastic. According to the general theory, as stated in $\cite{geyer}$, the MHG update is reversible with respect to $\rho$. 

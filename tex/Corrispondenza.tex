@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\begin{document}
+\fontspec[Numbers={OldStyle}]{Linux Libertine O}
+
+	\include{./tex/random_walk}
+%%% \include{./tex/MHG_algorithm}
+	\include{./tex/swap_kernel}
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{9}
+
+\bibitem{promo}
+  Błażej Miasojedow, Eric Moulines, Matti Vihola,
+  \emph{Adaptive Parallel Tempering Algorithm},
+  Arxive.
+
+\bibitem{geyer}  
+	Charles J. Geyer,
+	\emph{Markov Chain Monte Carlo Lecture Notes}.  
+\end{thebibliography}	
+
+\end{document}
+
+
+
+We shall adress several possible swap strategies $\swap$ differing in the way the coordinate chains influence one another. 
+All $\swap$ kernels shall target the $\pi_\beta$ distribution. All of them shall be state-depending mixing kernels (see \cite{geyer}, page 58) of the following form
+
+\begin{equation}\label{swappy}
+	\swap (x, A) = \frac{1}{{L \choose 2}} \Big\{\sum_{1 \leq i < j \leq L} \alpha_{ij} (x) \delta_{S_{ij} x} (A) + \underbrace{ \sum_{1 \leq i < j \leq L} \Big[ 1 - \alpha_{ij}(x) \Big] \delta_x (A)}_{\text{"the defect kernel"}}\Big\},
+\end{equation}
+
+where 
+$$S_{ij} x \equiv (x_1, \dots, x_{i-1}, x_j, x_{i+1}, \dots , x_{j-1}, x_i, x_{j+1}, \dots, x_L)$$
+and $\alpha_{ij}(x)$ is the probability of accepting a swap between $i^\text{th}$ and $j^\text{th}$ coordinate.
+Thus, we do assume the following
+
+\begin{enumerate}[resume*=assumptions]
+	\item A single, random, state-dependent swap is to be made each turn.
+\end{enumerate}
+
+\begin{enumerate}[resume*=questions]
+	\item Czy dobrze rozumiem, że losujemy dowolną parę koordynat do zmiany, czy też powinniśmy iść podług strategii opisanej w \cite{promo}? \label{ile par?}
+\end{enumerate}
+
+	Observe also that in the language of previous section, $(i,j)$ corresponds to $k$, $S_{ij}x $ to $y_k$, and finally $\alpha_{ij} (x) \delta_{S_{ij} x} (A) $ must be $\int_A \alpha(x, y_k) Q_k (x, \mathrm{d }y_k)$. 
+	
+	
+\begin{enumerate}[resume*=questions]
+	\item Ja tu jestem na razie trochę zagubiony, bo w kontekście pracy Geyera nie do końca widzę jakie trzeba dobrać $Q_k$ żeby uprościło się do tego kernela, który stosuje się w Parallel Tempering. A wolałbym rozumieć, bo już w miarę dobrze rozumiem tę pracę Geyera i to chyba dobry punkt wyjścia do odwoływania się do podstawowych wyników obecnych w literaturze.
+\end{enumerate}
+
+	We want the probabilities of accepting a swap to be of the following form
+	
+\begin{equation}\label{prob if accepting in general}
+	\alpha_{ij}(x) \equiv \frac{\pi_\beta(S_{ij} x) M_{ij}(S_{ij} x, x)}{\pi_\beta(x) M_{ij}(x, S_{ij} x)} \wedge 1.
+\end{equation}
+
+	
+\begin{enumerate}[resume*=questions]
+	\item No i teraz mam dość dobre pytanie: w pana artykule są te $\alpha_{ij}(x)$ podzielone dodatkowo przez jednostajne prawdopodobieństwo wylosowania dwóch sąsiednich współrzędnych łańcucha $X$. Zapewne wtedy cały kernel $\swap$ jest stochastyczny. Jeśli jest prawdziwa teza \ref{ile par?}, to dobrze zrobiłem mnożąć LHS równania \ref{swappy} przez ${L \choose 2}$, bo dzięki temu $\swap$ jest stochastyczny, prawda? To mnożenie ma wyłącznie charakter normalizacyjny i nie oznacza, że zakładamy, że każda z par jest równie prawdopodobna?
+\end{enumerate}	
+
+Due to the \ref{product form} we see that eq. \ref{prob if accepting in general} may be simplified to
+
+\begin{equation}\label{prob if accepting better}
+	\alpha_{ij}(x) = \frac{\pi^{\beta_i}(x_j)\pi^{\beta_j}(x_i) M_{ij}(S_{ij} x, x)}{\pi^{\beta_i}(x_i)\pi^{\beta_j}(x_j)  M_{ij}(x, S_{ij} x)} \wedge 1 = \Big(\frac{\pi(x_j)}{\pi(x_i)}\Big)^{\beta_i - \beta_j} \frac{M_{ij}(S_{ij} x, x)}{M_{ij}(x, S_{ij} x)} \wedge 1.
+\end{equation}
+
+	Now we shall pass to the section dedicated to different versions of the proposal distribution $Q$. Mostly $Q$ will depend functionally on distribution $\pi$ so that some particular areas of its support are promoted (searched with higher probability). We believe that in this way the geometry of $\pi$'s support will be better understood by the algorithm.
+	
+\subsubsection*{Proposal distribution A}
+
+
+

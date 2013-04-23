@@ -1,0 +1,103 @@
+\subsubsection*{The swap kernels}
+
+	Now we address the question of how to interlace the independent chains generated with kernel $\metro$. We want to swap the generated states so that chains with higher temperature influence the regions of lower temperatures. Being more precise, the swapping gives some possibility to the chains with lower temperatures to find themeselves in states that would otherwise be very less probable to occur. The swaps will be random and the probability of swaps should take into account some properties of $\pi$. Here we propose several state-dependent strategies of how to promote certain swaps.
+	
+\begin{questions}[resume]
+	\item Czy nie powinniśmy dodatkowo promomować częstszych zmian pomiędzy oryginalnym łańcuchem i pozostałymi? W ostateczności to przecież o zbadanie tego rozkładu nam chodzi. 
+
+	\item Co w zasadzie będziemy liczyć? Korzystamy z twierdzeń egrodycznych? Pewnie będziemy musieli, ale czy w takim razie nie musimy zadbać o skończoność wariancji?
+
+	\item Czy mamy liczyć jakieś konkretne całki względem tego rozkładu? Czy też najpierw chcemy jakoś poznać rozkład, namierzyć możliwie wiele mód, a potem odpalać algorytm na konkretnych funkcjach, żeby przybliżach z nich całki?
+
+	\item Czy to koniecznie muszą być swappy? Czemu regiony o wyższej temperaturze mają znajdować się w stanach bardziej prawdopodobnych w niższej temperaturze? Może lepiej byłoby mieć jakiś łańcuch, który skupiałby się wyłącznie tam, gdzie $\pi$ ma mało masy? 
+\end{questions}
+
+	Let us first describe the swap kernel $\swap$. 
+\begin{assumptions}[resume]
+	\item At one step of the algorithm, there will be only one possible swap between a chosen at random pair of coordinates.
+\end{assumptions}
+	
+	Let $S_{ij} x = (x_1, \dots, x_{i-1}, x_j, x_{i+1}, \dots, x_{j-1}, x_i, x_{j+1}, \dots, x_L)$. 
+	We require $\swap(x, \circ )$ to be a measure concentrated on the set of all possible pairs of swaps between coordinates of $x = (x_1, \dots, x_L)$, i.e. on the set $\mathfrak{S}_x \equiv \{ S_{ij}x : i < j  \}$. Let's assume that the proposal measure for the swap kernel $\mathcal{Q}$ is of the following form 
+	
+\begin{equation*}
+	\mathcal{Q}(x, A) \equiv \underset{i < j}{\sum} p_{ij}(x) \mathbb{I}_A (S_{ij} x)
+\end{equation*}	 
+
+	Then, the swap kernel would be of the following form, for any $x \in \Omega^L$ and $A$
+	
+\begin{equation*}
+	\swap(x,A) = \int_{A} \alpha_\text{swap} (x,y) \mathcal{Q}(x, \mathrm{d}\,y) + r(x) \mathcal{I}(x,A)
+\end{equation*}	
+	
+	where $r(x) = 1 - \underset{\Omega^L}{\int} \alpha_\text{swap} (x,y) \mathcal{Q}(x, \mathrm{d}\,y) $. Plugging $\mathcal{Q}$ permits us to write
+	
+\begin{align*}
+	\begin{split}
+	\int_{A} \alpha_\text{swap} (x,y) \mathcal{Q}(x, \mathrm{d}\,y) &= \underset{ i < j}{\sum} p_{ij}(x) \int \alpha_\text{swap} (x,y) \mathbb{I}_A (y) \delta_{S_{ij}x}(\mathrm{d}\, y) \\ &= \underset{ i < j}{\sum} p_{ij}(x) \alpha_\text{swap} (x, S_{ij}x) \mathbb{I}_A(S_{ij} x),
+	\end{split}
+\end{align*}	
+
+	so that finally
+	
+\begin{equation*}
+	\swap(x,A) = \underset{ i < j}{\sum} p_{ij}(x) \alpha_\text{swap} (x, S_{ij}x) \mathbb{I}_A(S_{ij} x) + \Big( 1 - \underset{ i < j}{\sum} p_{ij}(x) \alpha_\text{swap} (x, S_{ij}x)\Big) \mathcal{I}(x,A),
+\end{equation*}	
+	
+	where 
+$$\alpha_\text{swap}(x,y) = \frac{\pi_\beta( \mathrm{d}\, y ) \mathcal{Q}(y, \mathrm{d}\,x)}{\pi_\beta( \mathrm{d}\, x ) \mathcal{Q}(x, \mathrm{d}\,y)} \wedge 1$$
+
+ is the Radon-Nikodym derivative of two measures. It's calculated with respect to measure $ \mu (\mathrm{d}\,x, \mathrm{d}\,y) \equiv \pi(\mathrm{d}\,x) \mathcal{Q}(x, \mathrm{d}\,y)$. The measure that is being differentiated is $\mu$ composed with the exchange coordinates operation, $R(x,y) = (y,x)$\footnote{Which is obviously measurable in the appropriate sense.}. So finally $\alpha_\text{swap} \equiv \frac{\mathrm{d}\, \mu \circ R^{-1}}{\mathrm{d}\, \mu}$.
+	
+	Observe that thanks to the proposal's support finiteness we actually get 
+	
+$$\alpha_\text{swap}(x,y) =  \frac{\pi_\beta( y ) \mathcal{Q}(y, x)}{\pi_\beta( x ) \mathcal{Q}(x, y)} \wedge 1.$$
+
+
+\begin{questions}[resume]
+	\item To na pewno tak jest? Spróbuję przeprowadzić rachunek w piątek.
+\end{questions}
+
+	Now, since $y \in \mathfrak{S}_x $, the tagetted $\pi_\beta$ is a tensor of measures, $Q(x, S_{ij} x) = p_{ij}(x)$, and $Q( S_{ij} x, x) = p_{ij}(S_{ij}x)$ \footnote{Here we pass from measure notation to probability function notation, $\mathcal{Q}(x, \{S_{ij}x \}) = \mathcal{Q}(x, S_{ij}x)$. We can do it because $\mathcal{Q}$ is purely atomic given $x$.}, we get finally 
+
+\begin{equation*}
+	\alpha_\text{swap}(x,S_{ij} x) = \Big[  \Big(\frac{\pi(x_j)}{\pi(x_i)} \Big)^{\beta_i - \beta_j}  \frac{ p_{ij}(S_{ij} x )}{ p_{ij}( x ) }\Big] \wedge 1
+\end{equation*}	
+	
+	In our computer simulations we shall test the following swapping strategies:
+	
+\begin{strategy}
+	\item $p_{ij}(x) \propto \frac{\pi (x_j)}{\pi( x_i )} \wedge \frac{\pi (x_i)}{\pi( x_j )} = \exp \Big( - | \log ( \pi(x_j) ) - \log ( \pi(x_i) ) | \Big).$ 
+\end{strategy}
+
+	This strategy assures that the more probable swaps will occur between coordinates that are relatively the same, i.e. $\pi (x_j) \approx \pi (x_i)$. 
+	
+\begin{questions}[resume]
+	\item Pytanie w stylu Kuby Wojewódzkiego: czemu mielibyśmy promować coś takiego?
+\end{questions}		
+	
+\begin{strategy}[resume]
+	\item $p_{ij}(x) \propto \frac{\pi (x_j)}{\pi (x_i)} \wedge 1 = \exp \Big( - ( \log ( \pi(x_j) ) - \log ( \pi(x_j) ) )\Big) \wedge 1.$
+\end{strategy}
+
+	This strategy breaks the symmetry of the previous one. Here, if only $\pi(x_j)$ \dots 
+	
+\begin{questions}[resume]
+	\item Mi się wydaje, że coś tu szwankuje i powinno być raczej $p_{ij}(x) \propto \frac{\pi (x_i)}{\pi (x_j)} \wedge 1 $. Wtedy jeśli $\pi(x_i) > \pi (x_j)$, to z automatu promujemy $x_j$, który jest z łańcucha o wyższej temperaturze. 
+\end{questions}
+	
+	The subsequent strategies are again functions of the fist strategy.
+	
+\begin{strategy}[resume]
+	\item $p_{ij} \propto \Big( \frac{\pi (x_j)}{\pi( x_i )} \wedge \frac{\pi (x_i)}{\pi( x_j )} \Big)^{\beta_i - \beta_j} = \exp \Big( - (\beta_i - \beta_j)| \log ( \pi(x_j) ) - \log ( \pi(x_i) ) | \Big).$ 
+\end{strategy}
+	
+	This strategy permits us to soften a bit the requirement that $\pi(x_j) \approx \pi (x_i)$. This effect is strengthened for coordinates that are similarly tempered, i.e. where $\beta_i - \beta_j \approx 0$. Swaps between adjacent chains will be therefore more probable. 
+	
+	Finally
+	
+\begin{strategy}[resume]
+	\item $p_{ij} \propto \Big( \frac{\pi (x_j)}{\pi( x_i )} \wedge \frac{\pi (x_i)}{\pi( x_j )} \Big)^\frac{\beta_i - \beta_j}{1 + \rho(x_i, x_j)} = \exp \Big( - \frac{(\beta_i - \beta_j)| \log ( \pi(x_j) ) - \log ( \pi(x_i) ) |}{{1 + \rho(x_i, x_j)}} \Big).$
+\end{strategy} 
+
+	This strategy generalises the last one - $\rho$ is any quasi-metric. 

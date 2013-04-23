@@ -1,4 +1,75 @@
-\subsection{Liang \& Wang toy-example}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{What? Why? Who?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}
+		\frametitle{What is Parallel Tempering? Nutshell view.}
+	
+	\begin{itemize}
+		\item Stochastic simulation algorithm
+		\item a.k.a. replica exchange Monte Carlo 
+		\begin{itemize}	
+			\item sampling method  
+		\end{itemize}
+		\item Extension to Metropolis-Hastings algorithm \dots
+		\item \dots or rather Metropolis-Hastings-Green algorithm 
+		\begin{itemize}
+			\item more abstract version: general kernels
+			\item more freedom: discrete kernels, continous kernels, different dimensions  
+		\end{itemize} 
+
+	\end{itemize}	
+
+	\begin{center}
+		\begin{figure}\includegraphics[scale=.3, keepaspectratio]{./picts/nutshell1.jpg}\end{figure}	
+	\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+		\frametitle{Why Parallel Tempering? }
+	
+	\begin{itemize}
+		\item Tool to fight \emph{ multimodality }
+		\begin{itemize}
+			\item "allows good mixing with multimodial target distributions"
+			\item response to Metropolis-Hastings localness    
+			\item better estimation of integrals $ \int_{\mathbb{R}^d} f(x) \pi(x) \mathrm{d} x $
+		\end{itemize}
+		\item[] 
+
+		\item In certain physical models: thermodynamic interpretation
+		\begin{itemize}
+			\item Gibbs random-field model
+		\end{itemize}
+	\end{itemize}	
+
+\end{frame}
+
+\begin{frame}
+		\frametitle{Who might be interested in parallel tempering? }
+	
+	\begin{itemize}
+		\item anyone having problems with locality 
+		
+		\item researchers facing model selection problems 
+	 
+		\begin{itemize}
+			\item used for ..
+		\end{itemize}
+
+	\end{itemize}	
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{Liang \& Wang toy-example}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 \begin{frame}
 		\frametitle{Liang and Wong 2001}
@@ -41,113 +112,4 @@
 			
 \end{frame}
 	
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% Visualing the 
 
-\begin{frame}
-		\frametitle{toy-example visualised}
-	
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.3]{./picts/Liang_perspective.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}
-		\frametitle{toy-example visualised as a contour plot}
-	
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.25]{./picts/Liang_Contour_plot.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.15]{./picts/Liang_perspectives.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/Liang_Contour_plots.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% Metropolis-Hasting
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_10000_steps.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_1000_steps_ex1.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_1000_steps_ex2.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% Parallel Tempering
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/PT_simululation_1000_steps_1.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/PT_simululation_1000_steps_2.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/PT_simululation_10000_steps_1.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/PT_simululation_base_temperature_1000_steps_1.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
-
-\begin{frame}[plain]
-
-	\begin{center}
-		\begin{figure}\includegraphics[scale=.31]{./picts/PT_simululation_base_temperature_10000_steps_1.png}\end{figure}	
-	\end{center}	
-		
-\end{frame}
