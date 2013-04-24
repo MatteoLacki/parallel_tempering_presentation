@@ -1,8 +1,20 @@
+
 \begin{frame}
+		\frametitle{ Precise kernel form of $\swap$}
 
-	\frametitle{The idea flow}
+	\begin{itemize}
+		\item[] For any $x \in \Omega^L$ and $A \in \mathfrak{F}^{\otimes L}$ 
+	$$\swap(x, A) \equiv$$
+		\item[]
+$$\underset{ i < j}{\sum} p_{ij}(x) \alpha_\text{swap} (x, S_{ij}x) \mathbb{I}_A(S_{ij} x) + \Big( 1 - \underset{ i < j}{\sum} p_{ij}(x) \alpha_\text{swap} (x, S_{ij}x)\Big) \mathcal{I}(x,A)$$
 
-	Hello.
+		\item[] where 
+$$\alpha_\text{swap}(x,S_{ij} x) = \Big[  \Big(\frac{\pi(x_j)}{\pi(x_i)} \Big)^{\beta_i - \beta_j}  \frac{ p_{ij}(S_{ij} x )}{ p_{ij}( x ) }\Big] \wedge 1$$
+		\item[] is the acceptance level for swaps, 
+		\item[] $p_{ij}( x )$ - probability function of a swap given $x$. 
+		\item[] \emph{Nota bene:} given state $x$, $\swap$ has a finite support 
+	$$\mathfrak{S}_x \equiv\{ S_{ij} x : i <j \}$$
+	\end{itemize}
 
 \end{frame}
 

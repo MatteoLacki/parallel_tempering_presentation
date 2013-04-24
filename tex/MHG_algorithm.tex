@@ -33,13 +33,13 @@ We require that
 
 If these requirements are fulfilled, then the MHG update goes as follows
 
-\begin{algorithm}
+\begin{enumarate}
 	\item Simulate random index $K$ with probability $\mathbb{P}( K = k ) = Q_k (x,\Gamma)$.
 	\item[] With probability $1-\underset{k \in \mathcal{K}}{\sum} Q_k (x,\Gamma)$ skip the remaining steps and stay at $x$.
 	\item Simulate $Y \sim P_K (x, \circ)$.
 	\item Calculate $R_K (x,Y)$.
 	\item Accept $Y$ with probability $1\wedge R_K (x,Y)$.
-\end{algorithm}
+\end{enumarate}
 
 	The kernel of the MHG update is of the following form
 	

@@ -1,0 +1,71 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{MHG }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+		\frametitle{ The MHG algorithm revised}
+
+	\begin{itemize}
+		\item[] $$\rho: \mathfrak{G} \mapsto \mathbb{R}_{+}.$$  
+	\end{itemize}
+
+	\begin{itemize}
+	\item[\textcolor{green}{As.}] $Q_k (x,S)$ is known for all $k$,
+	\item[\textcolor{green}{As.}] $\forall_{x \in \Gamma} \underset{ k \in \mathcal{K}}{\sum} Q_k (x,S) \leq 1$,
+	\item[\textcolor{green}{As.}] For all $k \in \mathcal{K}$ $$R_k (x,y_k) \equiv \frac{\rho(\mathrm{d } y_k)Q_k (y_k, \mathrm{d }x)}{\rho(\mathrm{d } x)Q_k (x, \mathrm{d }y_k)}$$ is known ans possible to evaluate for any $x$ and $y_k$ 
+	\item[\textcolor{green}{As.}] For each $x$ and $k$ one can draw from 
+		$$P_k(x, \circ) \equiv \frac{Q_k (x, \circ)}{Q_k (x, \Gamma)}$$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\begin{enumerate}
+		\item Simulate random index $K$ with probability $\mathbb{P}( K = k ) = Q_k (x,\Gamma)$.
+		\item[] With probability $1-\underset{k \in \mathcal{K}}{\sum} Q_k (x,\Gamma)$ skip the remaining steps and stay at $x$.
+		\item Simulate $Y \sim P_K (x, \circ)$.
+		\item Calculate $R_K (x,Y)$.
+		\item Accept $Y$ with probability $1\wedge R_K (x,Y)$.
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item[] $$P(x,A) \equiv$$
+		\item[]	$$ \underset{k \in \mathcal{K}}{\sum} \int_A \alpha_k (x,y_k) Q_k(x, \mathrm{d }y_k) + \delta_x (A) \Big(1 - \underset{k \in \mathcal{K}}{\sum} \int_{\Omega} \alpha(x,y_k) Q_k(x,\mathrm{d }y_k) \Big) $$
+	
+		\item[] where $\alpha(x,y_k) \equiv 1\wedge R_K (x,y_k)$
+
+		\item[] Note: kernel is stochastic. 
+		\item[] According to the general theory MHG update is reversible with respect to $\rho$
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{MH localness}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[plain]
+
+	\begin{center}
+		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_10000_steps.png}\end{figure}	
+	\end{center}	
+		
+\end{frame}
+
+\begin{frame}[plain]
+
+	\begin{center}
+		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_1000_steps_ex1.png}\end{figure}	
+	\end{center}	
+		
+\end{frame}
+
+\begin{frame}[plain]
+
+	\begin{center}
+		\begin{figure}\includegraphics[scale=.31]{./picts/MH_simululation_1000_steps_ex2.png}\end{figure}	
+	\end{center}	
+		
+\end{frame}
+
